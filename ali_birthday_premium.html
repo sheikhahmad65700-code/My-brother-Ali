@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Ali 👑 — From Ahmii</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root { --gold:#d4af37; }
+*{margin:0;padding:0;box-sizing:border-box}
+#s5{
+    height: auto;
+}
+body{
+height:100vh;
+background:linear-gradient(120deg,#000,#d4af37,#000);
+background-size:400% 400%;
+animation:bgMove 10s ease infinite;
+font-family:Arial,sans-serif;
+color:gold;
+}
+
+@keyframes bgMove{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+
+/* ✅ NEON 3D TEXT */
+.neon{
+font-size:38px;
+color:#fff;
+text-shadow:
+0 0 5px gold,
+0 0 10px gold,
+0 0 20px gold,
+0 0 40px #ffdd55;
+animation:glow 1.5s infinite alternate;
+}
+
+@keyframes glow{
+from{text-shadow:0 0 10px gold}
+to{text-shadow:0 0 30px gold}
+}
+
+.screen{
+height:100vh;
+display:none;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+position:relative;
+z-index:5;
+}
+.screen.active{display:flex}
+
+.btn{
+margin-top:25px;
+padding:14px 38px;
+border:none;
+border-radius:50px;
+font-size:18px;
+background:linear-gradient(90deg,#ffd700,#b8860b);
+color:black;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 0 25px gold;
+}
+
+#popup,#faceLock{
+position:fixed; inset:0;
+background:black;
+display:none;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:100;
+}
+
+#popup.show{display:flex}
+
+#goldRain,#balloons,#confetti{
+position:fixed; inset:0;
+pointer-events:none;
+z-index:1;
+}
+
+.rain{position:absolute;top:-50px;color:gold;font-size:18px;animation:fall 5s linear infinite}
+@keyframes fall{to{transform:translateY(120vh)}}
+
+.balloon{position:absolute;bottom:-100px;font-size:40px;animation:fly 10s linear infinite}
+@keyframes fly{to{transform:translateY(-120vh)}}
+
+.confetti{position:absolute;width:8px;height:8px;background:gold;animation:confettiFall 3s linear infinite}
+@keyframes confettiFall{to{transform:translateY(120vh) rotate(360deg);opacity:0}}
+
+.fire{position:absolute;width:6px;height:6px;border-radius:50%;background:gold;animation:boom 1s linear infinite}
+@keyframes boom{to{transform:translate(var(--x),var(--y));opacity:0}}
+
+video{width:90%;max-width:450px;border-radius:20px;box-shadow:0 0 30px gold}
+
+#giftBox{font-size:100px;cursor:pointer;animation:shake .6s infinite alternate}
+@keyframes shake{to{transform:rotate(5deg)}}
+
+#selfieCam{width:200px;border-radius:15px;margin-top:10px;box-shadow:0 0 20px gold}
+#selfieShot{width:200px;border-radius:15px;margin-top:10px;display:none}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+</audio>
+
+<div id="goldRain"></div>
+<div id="balloons"></div>
+<div id="confetti"></div>
+
+<!-- FACE LOCK -->
+<div id="faceLock">
+<h1 class="neon">🔒 Face Unlock Required</h1>
+<button class="btn" onclick="unlockFace()">Scan Face</button>
+</div>
+
+<!-- SCREENS -->
+<div class="screen active" id="s1">
+<h1 class="neon">⚠️ Warning Ali 👑</h1>
+<button class="btn" onclick="startMusic(); go('s2')">Press Anyway</button>
+</div>
+
+<div class="screen" id="s2">
+<h1 class="neon">😂 Hehe You Did It</h1>
+<button class="btn" onclick="go('s3')">Again?</button>
+</div>
+
+<div class="screen" id="s3">
+<h1 class="neon">😏 Last One Promise</h1>
+<button class="btn" onclick="go('s4')">Final Button</button>
+</div>
+
+<div class="screen" id="s4">
+<h1 class="neon">This is your secret gift Ali 👑</h1>
+<button class="btn" onclick="openPopup()">Open Surprise 🎁</button>
+</div>
+
+<div id="popup">
+<h2 class="neon">🎁 Tap The Gift</h2>
+<div id="giftBox" onclick="openGift()">🎁</div>
+</div>
+
+<!-- FINAL -->
+<div class="screen" id="s5">
+<h1 class="neon">🎉 Happy Birthday Ali 👑</h1>
+
+<video id="vid" src="ali.mp4" controls autoplay></video>
+
+<h2 id="ageTimer"></h2>
+<h2 id="countdown"></h2>
+
+<h3 class="neon">📸 Auto Selfie Capture</h3>
+<video id="selfieCam" autoplay muted></video>
+<img id="selfieShot">
+<a id="downloadSelfie" class="btn" style="display:none" download="Ali-Selfie.png">Download Selfie 📥</a>
+
+<a class="btn" target="_blank" 
+href="https://wa.me/?text=🎉 Happy Birthday Ali 👑🎂🔥">
+Share On WhatsApp 💚</a>
+</div>
+
+<script>
+function startMusic(){ bgMusic.play(); }
+function go(id){
+document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+}
+function openPopup(){ popup.classList.add("show"); }
+function openGift(){ popup.classList.remove("show"); faceLock.style.display="flex"; }
+
+function unlockFace(){
+faceLock.innerHTML="<h1 class='neon'>✅ Face Verified</h1>";
+setTimeout(finalPage,1500);
+}
+
+function finalPage(){
+faceLock.style.display="none";
+go('s5');
+bgMusic.pause();
+vid.requestFullscreen().catch(()=>{});
+startFireworks();
+startConfetti();
+startAgeTimer();
+startBirthdayCountdown();
+playAIVoice();
+startCamera();
+}
+
+/* ✅ AI VOICE */
+function playAIVoice(){
+let msg=new SpeechSynthesisUtterance(
+"Happy Birthday Ali. May Allah bless you with success, happiness and a long life."
+);
+speechSynthesis.speak(msg);
+}
+
+/* ✅ AGE TIMER */
+function startAgeTimer(){
+const birthDate=new Date(2007,11,5);
+setInterval(()=>{
+const now=new Date();
+let diff=now-birthDate;
+let years=Math.floor(diff/31557600000);
+let sec=Math.floor(diff/1000)%60;
+let min=Math.floor(diff/60000)%60;
+let hr=Math.floor(diff/3600000)%24;
+ageTimer.innerHTML=`🎂 ${years} Years ${hr}h ${min}m ${sec}s Old`;
+},1000);
+}
+
+/* ✅ NEXT BIRTHDAY COUNTDOWN */
+function startBirthdayCountdown(){
+setInterval(()=>{
+const now=new Date();
+let next=new Date(now.getFullYear(),11,5);
+if(now>next) next.setFullYear(now.getFullYear()+1);
+let diff=next-now;
+let d=Math.floor(diff/86400000);
+let h=Math.floor(diff/3600000)%24;
+let m=Math.floor(diff/60000)%60;
+let s=Math.floor(diff/1000)%60;
+countdown.innerHTML=`🎯 Next Birthday In: ${d}d ${h}h ${m}m ${s}s`;
+},1000);
+}
+
+/* ✅ AUTO SELFIE CAMERA */
+function startCamera(){
+navigator.mediaDevices.getUserMedia({video:true})
+.then(stream=>{
+selfieCam.srcObject=stream;
+setTimeout(captureSelfie,3000);
+});
+}
+
+function captureSelfie(){
+let canvas=document.createElement("canvas");
+canvas.width=200;
+canvas.height=200;
+canvas.getContext("2d").drawImage(selfieCam,0,0,200,200);
+selfieShot.src=canvas.toDataURL("image/png");
+selfieShot.style.display="block";
+downloadSelfie.href=selfieShot.src;
+downloadSelfie.style.display="inline-block";
+}
+
+/* EFFECTS */
+for(let i=0;i<40;i++){
+let r=document.createElement("div");
+r.className="rain";r.innerHTML="★";
+r.style.left=Math.random()*100+"%";
+r.style.animationDelay=Math.random()*5+"s";
+goldRain.appendChild(r);
+}
+for(let i=0;i<15;i++){
+let b=document.createElement("div");
+b.className="balloon";b.innerHTML="🎈";
+b.style.left=Math.random()*100+"%";
+b.style.animationDelay=Math.random()*10+"s";
+balloons.appendChild(b);
+}
+
+function startConfetti(){
+for(let i=0;i<120;i++){
+let c=document.createElement("div");
+c.className="confetti";
+c.style.left=Math.random()*100+"%";
+c.style.animationDelay=Math.random()*3+"s";
+confetti.appendChild(c);
+setTimeout(()=>c.remove(),3000);
+}
+}
+
+function startFireworks(){
+setInterval(()=>{
+for(let i=0;i<20;i++){
+let f=document.createElement("div");
+f.className="fire";
+f.style.left="50%";f.style.top="50%";
+f.style.setProperty("--x",(Math.random()*600-300)+"px");
+f.style.setProperty("--y",(Math.random()*600-300)+"px");
+document.body.appendChild(f);
+setTimeout(()=>f.remove(),1000);
+}
+},1200);
+}
+</script>
+
+</body>
+</html>
